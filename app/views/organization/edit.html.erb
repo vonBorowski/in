@@ -1,9 +1,6 @@
 <% content_for :title, "Editar #{@organization.name}" %>
 <% breadcrumb :edit_organization, @organization %>
-<% content_for :actions do %>
-<%= link_to "Atualizar Organização", "#", class: "btn btn-primary pull-right", onclick: '$(".edit_organization").submit()' %>
-<% end %>
 
-<%= form_for @organization do |f| %>
+<%= bootstrap_form_for @organization, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10" do |f| %>
   <%= render partial: "form", locals: { f: f } %>
 <% end %>

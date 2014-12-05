@@ -31,35 +31,19 @@ class TaskController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.project = @project
-
-    if @task.save
-      flash[:notice] = 'Task was successfully created.'
-      respond_with(@task, location: @task)
-    else
-      flash[:error] = @task.errors.full_messages
-      respond_with(@task.errors.full_messages, location: new_project_task_path)
-    end
+    @task.save
+    respond_with(@task)
   end
 
   def update
-    if @task.update_attributes(task_params)
-      flash[:notice] = 'Task was successfully updated.'
-      respond_with(@task, location: @task)
-    else
-      flash[:error] = @task.errors.full_messages
-      respond_with(@task.errors.full_messages, location: edit_task_path(@task))
-    end
+    @task.update_attributes(task_params)
+    respond_with(@task)
   end
 
   def destroy
     project = @task.project
-    if @task.destroy
-      flash[:notice] = 'Task was successfully destroyed.'
-      respond_with(nil, location: project_task_index_path(project))
-    else
-      flash[:error] = @task.errors.full_messages
-      respond_with(@task.errors.full_messages,location: project_task_index_path(project))
-    end
+    @task.destroy
+    respond_with(nil, location: project_task_index_path(project))
   end
 
   private

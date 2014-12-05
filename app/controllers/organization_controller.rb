@@ -23,35 +23,18 @@ class OrganizationController < ApplicationController
   end
 
   def create
-    @organization = Organization.new(organization_params)
-
-    if @organization.save
-      flash[:notice] = 'Organization was successfully created.'
-      respond_with(@organization, location: @organization)
-    else
-      flash[:error] = @organization.errors.full_messages
-      respond_with(@organization.errors.full_messages, location: new_organization_path)
-    end
+    @organization = Organization.create(organization_params)
+    respond_with(@organization)
   end
 
   def update
-    if @organization.update_attributes(organization_params)
-      flash[:notice] = 'Organization was successfully updated.'
-      respond_with(@organization, location: @organization)
-    else
-      flash[:error] = @organization.errors.full_messages
-      respond_with(@organization.errors.full_messages, location: edit_organization_path(@organization))
-    end
+    @organization.update_attributes(organization_params)
+    respond_with(@organization)
   end
 
   def destroy
-    if @organization.destroy
-      flash[:notice] = 'Organization was successfully destroyed.'
-      respond_with(nil, location: organization_index_path)
-    else
-      flash[:error] = @organization.errors.full_messages
-      respond_with(@organization.errors.full_messages,location: organization_index_path)
-    end
+    @organization.destroy
+    respond_with(nil, location: organization_index_path)
   end
 
   private

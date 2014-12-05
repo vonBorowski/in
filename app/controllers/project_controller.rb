@@ -31,35 +31,19 @@ class ProjectController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.organization = @organization
-
-    if @project.save
-      flash[:notice] = 'Project was successfully created.'
-      respond_with(@project, location: @project)
-    else
-      flash[:error] = @project.errors.full_messages
-      respond_with(@project.errors.full_messages, location: new_organization_project_path(@organization))
-    end
+    @project.save
+    respond_with(@project)
   end
 
   def update
-    if @project.update_attributes(project_params)
-      flash[:notice] = 'Project was successfully updated.'
-      respond_with(@project, location: @project)
-    else
-      flash[:error] = @project.errors.full_messages
-      respond_with(@project.errors.full_messages, location: edit_project_path(@project))
-    end
+    @project.update_attributes(project_params)
+    respond_with(@project)
   end
 
   def destroy
     organization = @project.organization
-    if @project.destroy
-      flash[:notice] = 'Project was successfully destroyed.'
-      respond_with(nil, location: organization_project_index_path(organization))
-    else
-      flash[:error] = @project.errors.full_messages
-      respond_with(@project.errors.full_messages,location: organization_project_index_path(organization))
-    end
+    @project.destroy
+    respond_with(nil, location: organization_project_index_path(organization))
   end
 
   private

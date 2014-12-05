@@ -1,0 +1,39 @@
+  <%
+    sa = @time_entry.starts_at || Time.now
+    ea = @time_entry.ends_at || Time.now
+  %>
+  <% content_for :actions do %>
+    <%= link_to "Salvar", "#", class: "btn btn-primary pull-right", onclick: "$('##{f.options[:html][:id]}').submit()" %>
+  <% end %>
+  <div class="ibox float-e-margins">
+    <%= render partial: "layouts/float_header", locals: { title: "Dados do Lançamento" } %>
+    <div class="ibox-content">
+      <div class="form-horizontal m-t-md">
+        <%= f.select :task_id, options_for_select(Task.all.map{|s|[s.name, s.id]}, @time_entry.task_id), {}, class: "form-control" %>
+        <%= f.text_field :starts_at, value: sa.strftime("%d/%m/%Y %H:%M:%S"), class: "form-control" %>
+        <%= f.text_field :ends_at, value: ea.strftime("%d/%m/%Y %H:%M:%S"), class: "form-control" %>
+        <%= f.text_field :memo, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(function () {
+        $('#starts_at_picker').datetimepicker({
+          icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+          }
+        });
+        $('#ends_at_picker').datetimepicker({
+          icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+          }
+        });
+    });
+  </script>

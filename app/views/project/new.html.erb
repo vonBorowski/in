@@ -1,9 +1,6 @@
 <% content_for :title, "Novo Projeto" %>
 <% breadcrumb :new_project, @organization %>
-<% content_for :actions do %>
-  <%= link_to "Salvar Projeto", "#", class: "btn btn-primary pull-right", onclick: '$(".new_project").submit()' %>
-<% end %>
 
-<%= form_for @project, url: organization_project_index_path(@organization) do |f| %>
+<%= bootstrap_form_for @project, url: organization_project_index_path(@organization), layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10" do |f| %>
   <%= render partial: "form", locals: { f: f } %>
 <% end %>

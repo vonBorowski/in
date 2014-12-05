@@ -27,35 +27,19 @@ class TimeEntryController < ApplicationController
   def create
     @time_entry = TimeEntry.new(time_entry_params)
     @time_entry.user = @user
-
-    if @time_entry.save
-      flash[:notice] = 'TimeEntry was successfully created.'
-      respond_with(@time_entry, location: @time_entry)
-    else
-      flash[:error] = @time_entry.errors.full_messages
-      respond_with(@time_entry.errors.full_messages, location: new_user_time_entry_path)
-    end
+    @time_entry.save
+    respond_with(@time_entry)
   end
 
   def update
-    if @time_entry.update_attributes(time_entry_params)
-      flash[:notice] = 'TimeEntry was successfully updated.'
-      respond_with(@time_entry, location: @time_entry)
-    else
-      flash[:error] = @time_entry.errors.full_messages
-      respond_with(@time_entry.errors.full_messages, location: edit_time_entry_path(@time_entry))
-    end
+    @time_entry.update_attributes(time_entry_params)
+    respond_with(@time_entry)
   end
 
   def destroy
     user = @time_entry.user
-    if @time_entry.destroy
-      flash[:notice] = 'TimeEntry was successfully destroyed.'
-      respond_with(nil, location: user_time_entry_index_path(user))
-    else
-      flash[:error] = @time_entry.errors.full_messages
-      respond_with(@time_entry.errors.full_messages,location: user_time_entry_index_path(user))
-    end
+    @time_entry.destroy
+    respond_with(@time_entry,location: user_time_entry_index_path(user))
   end
 
   private
