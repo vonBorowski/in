@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body class="fixed-sidebar<%= " #{params[:skin]}" if params[:skin] %>">
+<body class="fixed-sidebar<%= params[:skin] ? " #{params[:skin]}" : " skin-1" %>">
   <div id="wrapper">
     <%= render "layouts/side_navbar" %>
     <div id="page-wrapper" class="gray-bg">
