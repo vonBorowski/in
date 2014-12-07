@@ -10,8 +10,8 @@
     <div class="ibox-content">
       <div class="form-horizontal m-t-md">
         <%= f.select :task_id, options_for_select(Task.all.map{|s|[s.name, s.id]}, @time_entry.task_id), {}, class: "form-control" %>
-        <%= f.text_field :starts_at, value: sa.strftime("%d/%m/%Y %H:%M:%S"), class: "form-control" %>
-        <%= f.text_field :ends_at, value: ea.strftime("%d/%m/%Y %H:%M:%S"), class: "form-control" %>
+        <%= f.datetime_select :starts_at, class: "form-control" %>
+        <%= f.datetime_select :ends_at, class: "form-control" %>
         <%= f.text_field :memo, class: "form-control" %>
       </div>
     </div>
