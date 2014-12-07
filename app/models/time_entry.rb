@@ -10,4 +10,16 @@ class TimeEntry < ActiveRecord::Base
   def duration
     (ends_at - starts_at) / 1.hour
   end
+
+  def self.by_year(year)
+    where('extract(year from starts_at) = ? or extract(day from ends_at) = ?', year, year)
+  end
+
+  def self.by_month(month)
+    where('extract(month from starts_at) = ? or extract(day from ends_at) = ?', month, month)
+  end
+
+  def self.by_day(day)
+    where('extract(day from starts_at) = ? or extract(day from ends_at) = ?', day, day)
+  end
 end

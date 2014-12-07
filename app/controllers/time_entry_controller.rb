@@ -6,7 +6,11 @@ class TimeEntryController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    @time_entries = @user.time_entries.order('starts_at DESC')
+    @time_entries = @user.time_entries
+    @time_entries = @time_entries.by_year(params[:year]) if params[:year]
+    @time_entries = @time_entries.by_month(params[:month]) if params[:month]
+    @time_entries = @time_entries.by_day(params[:day]) if params[:day]
+    @time_entries = @time_entries.order('starts_at DESC')
     respond_with(@time_entries)
   end
 
@@ -45,8 +49,7 @@ class TimeEntryController < ApplicationController
   private
 
   def set_user
-    @user = User.find_by(id: params[:user_id]) if params[:user_id]
-    @user = current_user if !params[:user_id]
+    @user = User.find_by(id: params[:user_id])
   end
 
   def set_time_entry
