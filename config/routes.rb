@@ -20,5 +20,10 @@ Rails.application.routes.draw do
 
   resources :project, only: :index
   resources :task, only: :index
-  resources :time_entry, only: :index
+
+  get '/user/:user_id/time_entry/:year(/:month(/:day))' => 'time_entry#index', constraints: {
+    year:       /\d{4}/,
+    month:      /\d{1,2}/,
+    day:        /\d{1,2}/
+  }
 end
