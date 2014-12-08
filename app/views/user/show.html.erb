@@ -1,6 +1,7 @@
 <% content_for :title, @user.first_name %>
 <% breadcrumb :user, @user %>
 <% content_for :actions do %>
+<%= link_to "Lançamentos", user_time_entry_index_path(@user), class: "btn btn-primary" %>
   <%= link_to "Editar", edit_user_path(@user), class: "btn btn-danger" %>
 <% end %>
 
