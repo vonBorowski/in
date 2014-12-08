@@ -59,3 +59,4 @@ gem 'bootstrap3-datetimepicker-rails', '~> 3.1.3'
 
 gem 'responders'
 gem 'bootstrap_form'
+gem 'newrelic_rpm'
