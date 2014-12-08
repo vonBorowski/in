@@ -22,4 +22,12 @@ class TimeEntry < ActiveRecord::Base
   def self.by_day(day)
     where('extract(day from starts_at) = ? or extract(day from ends_at) = ?', day, day)
   end
+
+  def self.by_task(task_id)
+    where('task_id = ?', task_id)
+  end
+
+  def self.by_project(project_id)
+    joins(:task).where('project_id = ?', project_id)
+  end
 end

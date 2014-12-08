@@ -7,6 +7,8 @@ class TimeEntryController < ApplicationController
 
   def index
     @time_entries = @user.time_entries
+    @time_entries = @time_entries.by_project(params[:project_id]) if params[:project_id]
+    @time_entries = @time_entries.by_task(params[:task_id]) if params[:task_id]
     @time_entries = @time_entries.by_year(params[:year]) if params[:year]
     @time_entries = @time_entries.by_month(params[:month]) if params[:month]
     @time_entries = @time_entries.by_day(params[:day]) if params[:day]
