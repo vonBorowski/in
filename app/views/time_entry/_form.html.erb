@@ -1,6 +1,11 @@
   <%
     sa = @time_entry.starts_at || Time.now
     ea = @time_entry.ends_at || Time.now
+
+    organization = @time_entry.task.nil? ? [] : @time_entry.task.project.organization.id
+    projects = @time_entry.task.nil? ? [] : @time_entry.task.project.organization.projects
+    project = @time_entry.task.nil? ? nil : @time_entry.task.project.id
+    tasks = @time_entry.task.nil? ? [] : @time_entry.task.project.tasks.all
   %>
   <% content_for :actions do %>
     <%= link_to "Salvar", "#", class: "btn btn-primary pull-right", onclick: "$('##{f.options[:html][:id]}').submit()" %>
@@ -9,7 +14,18 @@
     <%= render partial: "layouts/float_header", locals: { title: "Dados do Lançamento" } %>
     <div class="ibox-content">
       <div class="form-horizontal m-t-md">
-        <%= f.select :task_id, options_for_select(Task.all.map{|s|[s.name, s.id]}, @time_entry.task_id), {}, class: "form-control" %>
+        <%= f.form_group do %>
+          <%= select_tag :organization_id, options_from_collection_for_select(Organization.all, :id, :name, organization), class: "form-control",
+              "data-dynamic-selectable-url" => organization_project_index_path(':organization_id'),
+              "data-dynamic-selectable-target" => '#project_id'
+             %>
+        <% end %>
+        <%= f.form_group do %>
+          <%= select_tag :project_id, options_from_collection_for_select(projects, :id, :name, project), class: "form-control",
+              "data-dynamic-selectable-url" => project_task_index_path(':project_id'),
+              "data-dynamic-selectable-target" => '#time_entry_task_id' %>
+        <% end %>
+        <%= f.collection_select :task_id, tasks, :id, :name, include_blank: false, class: "form-control" %>
         <%= f.datetime_select :starts_at, class: "form-control" %>
         <%= f.datetime_select :ends_at, class: "form-control" %>
         <%= f.text_field :memo, class: "form-control" %>
