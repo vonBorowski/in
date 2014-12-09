@@ -16,5 +16,6 @@
 //= require moment
 //= require moment/pt-br
 //= require bootstrap-datetimepicker
+//= require init
 //= require_tree ../../../vendor/assets/javascripts/inspinia/
 //= require_tree .
