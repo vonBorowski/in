@@ -7,50 +7,52 @@
 <div class="ibox float-e-margins">
   <%= render partial: "layouts/float_header", locals: { title: "Lançamentos" } %>
   <div class="ibox-content">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Projeto</th>
-          <th>Data</th>
-          <th>Período</th>
-          <th>Quantidade</th>
-          <th>Memo</th>
-          <th>Usuário</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @time_entries.each do |te| %>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
           <tr>
-            <td><%= te.id %></td>
-            <td>
-              <%= link_to te.task.project.name, te.task.project %><br />
-              <small><%= link_to te.task.name, te.task %></small>
-            </td>
-            <td>
-              <strong><%= te.starts_at.strftime("%d/%m/%Y") %></strong><br />
-              <strong><%= te.ends_at.strftime("%d/%m/%Y") if te.starts_at.to_date != te.ends_at.to_date %></strong>
-            </td>
-            <td>
-              <strong><%= te.starts_at.strftime("%H:%M:%S") %></strong><br />
-              <strong><%= te.ends_at.strftime("%H:%M:%S") %></strong>
-            </td>
-            <td>
-              <%= te.duration %>
-            </td>
-            <td>
-              <%= te.memo %>
-            </td>
-            <td>
-              <%= link_to te.user.first_name, te.user %>
-            </td>
-            <td class="project-actions">
-              <%= actions(te) %>
-            </td>
+            <th>#</th>
+            <th>Projeto</th>
+            <th>Data</th>
+            <th>Período</th>
+            <th>Quantidade</th>
+            <th>Memo</th>
+            <th>Usuário</th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @time_entries.each do |te| %>
+            <tr>
+              <td><%= te.id %></td>
+              <td>
+                <%= link_to te.task.project.name, te.task.project %><br />
+                <small><%= link_to te.task.name, te.task %></small>
+              </td>
+              <td>
+                <strong><%= te.starts_at.strftime("%d/%m/%Y") %></strong><br />
+                <strong><%= te.ends_at.strftime("%d/%m/%Y") if te.starts_at.to_date != te.ends_at.to_date %></strong>
+              </td>
+              <td>
+                <strong><%= te.starts_at.strftime("%H:%M:%S") %></strong><br />
+                <strong><%= te.ends_at.strftime("%H:%M:%S") %></strong>
+              </td>
+              <td>
+                <%= te.duration %>
+              </td>
+              <td>
+                <%= te.memo %>
+              </td>
+              <td>
+                <%= link_to te.user.first_name, te.user %>
+              </td>
+              <td class="project-actions">
+                <%= actions(te) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
