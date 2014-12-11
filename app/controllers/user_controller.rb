@@ -5,27 +5,31 @@ class UserController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
+     authorize current_user
      @users = User.order('first_name ASC')
      respond_with(@users)
   end
 
   def show
+     authorize current_user
      respond_with(@user)
   end
 
   def new
+    authorize current_user
     @user = User.new
     respond_with(@user)
   end
 
   def create
+    authorize current_user
     @user = User.new(user_params)
     @user.save
     respond_with(@user)
   end
 
   def update
-    #authorize @user, :update?
+    authorize current_user
 
     if params[:user][:password].blank?
       params[:user].delete(:password)
@@ -37,11 +41,12 @@ class UserController < ApplicationController
   end
 
   def edit
-      #authorize @user, :edit?
-      respond_with(@user)
+    authorize current_user
+    respond_with(@user)
   end
 
   def destroy
+    authorize current_user
     @user.destroy
     respond_with(nil, location: user_index_path)
   end

@@ -36,7 +36,9 @@
               <li class="<%= 'active' if params[:controller] == 'organization' %>"><%= link_to "Organizações", organization_index_path %></li>
               <li class="<%= 'active' if params[:controller] == 'project' %>"><%= link_to "Projetos", project_index_path %></li>
               <li class="<%= 'active' if params[:controller] == 'task' %>"><%= link_to "Tarefas", task_index_path %></li>
-              <li class="<%= 'active' if params[:controller] == 'user' %>"><%= link_to "Usuários", user_index_path %></li>
+              <% if policy(:user).index? %>
+                 <li class="<%= 'active' if params[:controller] == 'user' %>"><%= link_to "Usuários", user_index_path %></li>
+              <% end %>   
             </ul>
           </li>
           <li class="<%= 'active' if params[:controller] == 'time_entry' %>">

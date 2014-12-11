@@ -17,6 +17,9 @@
               <%= f.text_field :profile_picture, placeholder: "Caminho para imagem do perfil", class: "form-control" %>
               <%= f.password_field :password, autocomplete: "off", placeholder: "Password", class: "form-control" %>
               <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password Confirmation", class: "form-control" %>
+              <%= f.form_group do %>
+                <%= f.check_box :admin %>
+              <% end %>  
             </div>
           </div>
         </div>
