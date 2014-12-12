@@ -16,7 +16,6 @@ module ApplicationHelper
 
   def actions(resource)
     output = ''
-    output << link_to(raw("#{fa_icon "eye"}"), resource, class: "btn btn-primary btn-outline", title: "Visualizar")
     output << link_to(raw("#{fa_icon "pencil"}"), [:edit, resource], class: "btn btn-primary btn-outline", title: "Editar")
     output << link_to(raw("#{fa_icon "trash"}"), resource, method: :delete, class: "btn btn-danger btn-outline", data: {confirm: "Tem certeza?"}, title: "Remover")
     output = content_tag(:div, output.html_safe, class: "btn-group")

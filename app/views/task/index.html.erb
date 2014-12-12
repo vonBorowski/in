@@ -20,9 +20,9 @@
         <tbody>
           <% @tasks.each do |t| %>
             <tr>
-              <td><%= t.id %></td>
+              <td><%= link_to t.id, t %></td>
               <td>
-                <strong><%= t.name %></strong><br />
+                <strong><%= link_to t.name, t %></strong><br />
                 <small><%= t.description %></small>
               </td>
               <td class="project-actions">

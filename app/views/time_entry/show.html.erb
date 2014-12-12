@@ -21,6 +21,7 @@
     <div class="row">
       <div class="col-lg-6">
         <dl class="dl-horizontal" >
+          <dt>Usuário:</dt> <dd><%= @time_entry.user.full_name %></dd>
           <dt>Iniciado em:</dt> <dd><%= @time_entry.starts_at %></dd>
           <dt>Finalizado em:</dt> <dd><%= @time_entry.ends_at %></dd>
           <dt>Memo:</dt> <dd><%= @time_entry.memo %></dd>

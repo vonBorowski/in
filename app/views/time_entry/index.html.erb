@@ -12,46 +12,52 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Projeto</th>
             <th>Data</th>
             <th>Período</th>
             <th>Quantidade</th>
+            <th>Projeto</th>
             <th>Memo</th>
-            <th>Usuário</th>
-            <th></th>
+            <th class="actions"></th>
           </tr>
         </thead>
         <tbody>
-          <% @time_entries.each do |te| %>
+          <%
+            total = 0.0
+            @time_entries.each do |te| %>
             <tr>
-              <td><%= te.id %></td>
+              <td><%= link_to te.id, te %></td>
               <td>
-                <%= link_to te.task.project.name, te.task.project %><br />
-                <small><%= link_to te.task.name, te.task %></small>
+                <strong><%= link_to te.starts_at.strftime("%d/%m/%Y"), te %></strong><br />
+                <strong><%= link_to te.ends_at.strftime("%d/%m/%Y"), te if te.starts_at.to_date != te.ends_at.to_date %></strong>
               </td>
               <td>
-                <strong><%= te.starts_at.strftime("%d/%m/%Y") %></strong><br />
-                <strong><%= te.ends_at.strftime("%d/%m/%Y") if te.starts_at.to_date != te.ends_at.to_date %></strong>
-              </td>
-              <td>
-                <strong><%= te.starts_at.strftime("%H:%M:%S") %></strong><br />
-                <strong><%= te.ends_at.strftime("%H:%M:%S") %></strong>
+                <%= te.starts_at.strftime("%H:%M:%S") %><br />
+                <%= te.ends_at.strftime("%H:%M:%S") %>
               </td>
               <td>
                 <%= te.duration %>
               </td>
               <td>
-                <%= te.memo %>
+                <%= link_to te.task.project.name, te.task.project %><br />
+                <small><%= link_to te.task.name, te.task %></small>
               </td>
               <td>
-                <%= link_to te.user.first_name, te.user %>
+                <%= te.memo %>
               </td>
               <td class="project-actions">
                 <%= actions(te) %>
               </td>
             </tr>
+            <% total += te.duration %>
           <% end %>
         </tbody>
+        <tfoot>
+          <tr class="info">
+            <th colspan="3" style="text-align: right;">Total</th>
+            <th><%= total %> horas</th>
+            <th colspan="3" style="text-align: right;"><%= @time_entries.size %> registro(s).</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>

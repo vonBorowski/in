@@ -21,9 +21,9 @@
         <tbody>
           <% @projects.each do |p| %>
             <tr>
-              <td><%= p.id %></td>
+              <td><%= link_to p.id, p %></td>
               <td>
-                <strong><%= p.name %></strong><br />
+                <strong><%= link_to p.name, p %></strong><br />
                 <small><%= p.description %></small>
               </td>
               <td>

@@ -1,6 +1,10 @@
 class TimeEntry < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :user
   belongs_to :task
+  delegate :project, to: :task
+  delegate :organization, to: :project
 
   validates :user, presence: true
   validates :task, presence: true
@@ -11,23 +15,15 @@ class TimeEntry < ActiveRecord::Base
     (ends_at - starts_at) / 1.hour
   end
 
-  def self.by_year(year)
-    where('extract(year from starts_at) = ? or extract(day from ends_at) = ?', year, year)
+  module SearchScope
+    def self.included(base)
+      base.has_scope :task_id
+      base.has_scope :project_id
+      base.has_scope :organization_id
+    end
   end
 
-  def self.by_month(month)
-    where('extract(month from starts_at) = ? or extract(day from ends_at) = ?', month, month)
-  end
-
-  def self.by_day(day)
-    where('extract(day from starts_at) = ? or extract(day from ends_at) = ?', day, day)
-  end
-
-  def self.by_task(task_id)
-    where('task_id = ?', task_id)
-  end
-
-  def self.by_project(project_id)
-    joins(:task).where('project_id = ?', project_id)
-  end
+  scope :task_id, -> task_id { where(:task_id => task_id) }
+  scope :project_id, -> project_id { joins(:task).where("tasks.project_id = ?", project_id) }
+  scope :organization_id, -> organization_id { joins(task: :project).where("projects.organization_id = ?", organization_id) }
 end

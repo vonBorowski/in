@@ -22,9 +22,9 @@
         <tbody>
           <% @organizations.each do |org| %>
             <tr>
-              <td><%= org.id %></td>
+              <td><%= link_to org.id, org %></td>
               <td>
-                <strong><%= org.name %></strong><br />
+                <strong><%= link_to org.name, org %></strong><br />
                 <small><%= org.full_name %></small>
               </td>
               <td><%= org.cnpj %></td>
