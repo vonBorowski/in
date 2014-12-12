@@ -11,6 +11,7 @@ class DynamicSelectable
   init: ($select) ->
     @urlTemplate = $select.data('dynamicSelectableUrl')
     @$targetSelect = $($select.data('dynamicSelectableTarget'))
+    @includeBlank = $select.data('dynamicSelectableBlank')
     $select.on 'change', =>
       @clearTarget()
       url = @constructUrl($select.val())
@@ -27,7 +28,10 @@ class DynamicSelectable
     @$targetSelect.trigger("change")
 
   clearTarget: ->
-    @$targetSelect.html('')
+    if @includeBlank
+      @$targetSelect.html('<option></option>')
+    else
+      @$targetSelect.html('')
 
   constructUrl: (id) ->
     if id && id != ''

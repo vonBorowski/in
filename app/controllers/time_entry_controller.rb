@@ -1,4 +1,6 @@
 class TimeEntryController < ApplicationController
+  include TimeEntry::SearchScope
+
   respond_to :html, :json, :xml
 
   before_filter :authenticate_user!
@@ -6,13 +8,7 @@ class TimeEntryController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    @time_entries = @user.time_entries
-    @time_entries = @time_entries.by_project(params[:project_id]) if params[:project_id]
-    @time_entries = @time_entries.by_task(params[:task_id]) if params[:task_id]
-    @time_entries = @time_entries.by_year(params[:year]) if params[:year]
-    @time_entries = @time_entries.by_month(params[:month]) if params[:month]
-    @time_entries = @time_entries.by_day(params[:day]) if params[:day]
-    @time_entries = @time_entries.order('starts_at DESC')
+    @time_entries = apply_scopes(@user.time_entries).all
     respond_with(@time_entries)
   end
 
@@ -45,7 +41,7 @@ class TimeEntryController < ApplicationController
   def destroy
     user = @time_entry.user
     @time_entry.destroy
-    respond_with(@time_entry,location: user_time_entry_index_path(user))
+    respond_with(@time_entry, location: user_time_entry_index_path(user))
   end
 
   private
