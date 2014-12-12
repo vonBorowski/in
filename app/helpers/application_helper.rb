@@ -15,10 +15,36 @@ module ApplicationHelper
   end
 
   def actions(resource)
-    output = ''
-    output << link_to(raw("#{fa_icon "pencil"}"), [:edit, resource], class: "btn btn-primary btn-outline", title: "Editar")
-    output << link_to(raw("#{fa_icon "trash"}"), resource, method: :delete, class: "btn btn-danger btn-outline", data: {confirm: "Tem certeza?"}, title: "Remover")
-    output = content_tag(:div, output.html_safe, class: "btn-group")
-    output.html_safe
+    content_tag(:div, class: "btn-group") do
+      concat link_to(raw("#{fa_icon "pencil"}"), [:edit, resource], class: "btn btn-primary btn-outline", title: "Editar")
+      concat link_to(raw("#{fa_icon "trash"}"), resource, method: :delete, class: "btn btn-danger btn-outline", data: {confirm: "Tem certeza?"}, title: "Remover")
+    end
+  end
+
+  def ibox(options = {})
+    ibox_class = "ibox float-e-margins"
+    ibox_class << " collapsed border-bottom" if options[:collapsed] == true
+    content_tag(:div, class: ibox_class) do
+      if options[:title].present?
+        content_tag(:div, class: "ibox-title") do
+          content_tag(:h5, options[:title]) +
+          content_tag(:div, class: "ibox-tools") do
+            if options[:collapsed].blank?
+              content_tag(:a, raw("#{fa_icon "chevron-up"}"), class: "collapse-link")
+            else
+              content_tag(:a, raw("#{fa_icon "chevron-up"}"), class: "collapse-link") if options[:collapsed] == false
+              content_tag(:a, raw("#{fa_icon "chevron-down"}"), class: "collapse-link") if options[:collapsed] == true
+            end
+          end
+        end +
+        content_tag(:div, class: "ibox-content") do
+          yield
+        end
+      else
+        content_tag(:div, class: "ibox-content") do
+          yield
+        end
+      end
+    end
   end
 end
