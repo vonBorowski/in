@@ -18,3 +18,5 @@
  *= require ../../../vendor/assets/stylesheets/inspinia/style
  *= require ../../../vendor/assets/stylesheets/inspinia/animate
  */
+
+ .ibox.collapsed .ibox-content { display: none; }
