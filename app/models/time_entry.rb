@@ -23,7 +23,7 @@ class TimeEntry < ActiveRecord::Base
     end
   end
 
-  scope :task_id, -> task_id { where(:task_id => task_id) }
+  scope :task_id, -> task_id { where(task_id: task_id) }
   scope :project_id, -> project_id { joins(:task).where("tasks.project_id = ?", project_id) }
   scope :organization_id, -> organization_id { joins(task: :project).where("projects.organization_id = ?", organization_id) }
 end

@@ -3,6 +3,49 @@
   <% link_to "Novo Lançamento", new_user_time_entry_path(@user), class: "btn btn-primary" %>
 <% end %>
 <% breadcrumb :time_entries, @user %>
+<%
+    organization = params[:organization_id]
+    project = params[:project_id]
+    task = params[:task_id]
+    projects = []
+    projects = Organization.find_by(id: organization).projects if !organization.blank?
+    tasks = []
+    tasks = Project.find_by(id: project).tasks if !project.blank?
+%>
+<div class="ibox float-e-margins">
+  <%= render partial: "layouts/float_header", locals: { title: "Filtro" } %>
+  <div class="ibox-content">
+    <%= bootstrap_form_tag method: 'get', layout: :horizontal do |f| %>
+      <%= f.select :organization_id,
+            options_from_collection_for_select(Organization.all, :id, :name, params[:organization_id]),
+            { include_blank: true },
+            class: "form-control",
+            id: 'organization_id',
+            name: 'organization_id',
+            "data-dynamic-selectable-url" => organization_project_index_path(':organization_id'),
+            "data-dynamic-selectable-target" => '#project_id',
+            "data-dynamic-selectable-blank" => 'true' %>
+      <%= f.select :project_id,
+            options_from_collection_for_select(projects, :id, :name, project),
+            { include_blank: true },
+            class: "form-control col-sm-10",
+            id: 'project_id',
+            name: 'project_id',
+            "data-dynamic-selectable-url" => project_task_index_path(':project_id'),
+            "data-dynamic-selectable-target" => '#task_id',
+            "data-dynamic-selectable-blank" => 'true' %>
+      <%= f.select :task_id,
+            options_from_collection_for_select(tasks, :id, :name, task),
+            { include_blank: true },
+            class: "form-control col-sm-10",
+            id: 'task_id',
+            name: 'task_id' %>
+      <%= f.form_group do %>
+        <%= f.submit "Filtrar", class: "btn btn-primary"%>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 <div class="ibox float-e-margins">
   <%= render partial: "layouts/float_header", locals: { title: "Lançamentos" } %>
