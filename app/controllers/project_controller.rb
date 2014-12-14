@@ -32,12 +32,12 @@ class ProjectController < ApplicationController
     @project = Project.new(project_params)
     @project.organization = @organization
     @project.save
-    respond_with(@project)
+    respond_with(@project, location: organization_project_index_path(@organization))
   end
 
   def update
     @project.update_attributes(project_params)
-    respond_with(@project)
+    respond_with(@project, location: organization_project_index_path(@project.organization))
   end
 
   def destroy

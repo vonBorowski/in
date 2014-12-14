@@ -21,7 +21,7 @@ class UserController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-    respond_with(@user)
+    respond_with(@user, location: user_index_path)
   end
 
   def update
@@ -33,7 +33,7 @@ class UserController < ApplicationController
     end
 
     @user.update_attributes(user_params)
-    respond_with(@user)
+    respond_with(@user, location: user_index_path)
   end
 
   def edit

@@ -8,7 +8,7 @@ class TimeEntryController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    @time_entries = apply_scopes(@user.time_entries).all
+    @time_entries = apply_scopes(@user.time_entries).order('starts_at DESC').all
     respond_with(@time_entries)
   end
 
@@ -30,12 +30,12 @@ class TimeEntryController < ApplicationController
     @time_entry = TimeEntry.new(time_entry_params)
     @time_entry.user = @user
     @time_entry.save
-    respond_with(@time_entry)
+    respond_with(@time_entry, location: user_time_entry_index_path(@user))
   end
 
   def update
     @time_entry.update_attributes(time_entry_params)
-    respond_with(@time_entry)
+    respond_with(@time_entry, location: user_time_entry_index_path(@time_entry.user))
   end
 
   def destroy
