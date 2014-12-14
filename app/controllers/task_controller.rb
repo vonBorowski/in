@@ -32,12 +32,12 @@ class TaskController < ApplicationController
     @task = Task.new(task_params)
     @task.project = @project
     @task.save
-    respond_with(@task)
+    respond_with(@task, location: project_task_index_path(@project))
   end
 
   def update
     @task.update_attributes(task_params)
-    respond_with(@task)
+    respond_with(@task, location: project_task_index_path(@task.project))
   end
 
   def destroy

@@ -24,12 +24,12 @@ class OrganizationController < ApplicationController
 
   def create
     @organization = Organization.create(organization_params)
-    respond_with(@organization)
+    respond_with(@organization, location: organization_index_path)
   end
 
   def update
     @organization.update_attributes(organization_params)
-    respond_with(@organization)
+    respond_with(@organization, location: organization_index_path)
   end
 
   def destroy

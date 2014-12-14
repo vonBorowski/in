@@ -30,12 +30,12 @@ class TimeEntryController < ApplicationController
     @time_entry = TimeEntry.new(time_entry_params)
     @time_entry.user = @user
     @time_entry.save
-    respond_with(@time_entry)
+    respond_with(@time_entry, location: user_time_entry_index_path(@user))
   end
 
   def update
     @time_entry.update_attributes(time_entry_params)
-    respond_with(@time_entry)
+    respond_with(@time_entry, location: user_time_entry_index_path(@time_entry.user))
   end
 
   def destroy
