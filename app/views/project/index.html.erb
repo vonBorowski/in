@@ -12,7 +12,7 @@
         <tr>
           <th>#</th>
           <th>Projeto</th>
-          <th>Budget</th>
+          <th class="text-right">Budget</th>
           <th></th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
               <strong><%= link_to p.name, p %></strong><br />
               <small><%= p.description %></small>
             </td>
-            <td>
+            <td class="text-right">
               <%= p.budget %><br />
               <small>Bloqueia: <%= p.block %></small>
             </td>

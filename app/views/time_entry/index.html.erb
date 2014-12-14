@@ -84,7 +84,7 @@
           <th>#</th>
           <th>Data</th>
           <th>Período</th>
-          <th>Quantidade</th>
+          <th class="text-right">Quantidade</th>
           <th>Projeto</th>
           <th>Memo</th>
           <th class="actions"></th>
@@ -104,7 +104,7 @@
               <%= te.starts_at.strftime("%H:%M:%S") %><br />
               <%= te.ends_at.strftime("%H:%M:%S") %>
             </td>
-            <td>
+            <td class="text-right">
               <%= te.duration %>
             </td>
             <td>
