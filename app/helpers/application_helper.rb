@@ -37,11 +37,11 @@ module ApplicationHelper
             end
           end
         end +
-        content_tag(:div, class: "ibox-content") do
+        content_tag(:div, class: options[:content_class] || 'ibox-content') do
           yield
         end
       else
-        content_tag(:div, class: "ibox-content") do
+        content_tag(:div, class: options[:content_class] || 'ibox-content') do
           yield
         end
       end

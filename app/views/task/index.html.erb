@@ -5,33 +5,30 @@
 <% breadcrumb :tasks, @project if @project %>
 <% breadcrumb :all_tasks if !@project %>
 
-<div class="ibox float-e-margins">
-  <%= render partial: "layouts/float_header", locals: { title: "Tarefas" } %>
-  <div class="ibox-content">
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
+<%= ibox title: "Tarefas" do %>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tarefa</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |t| %>
           <tr>
-            <th>#</th>
-            <th>Tarefa</th>
-            <th></th>
+            <td><%= link_to t.id, t %></td>
+            <td>
+              <strong><%= link_to t.name, t %></strong><br />
+              <small><%= t.description %></small>
+            </td>
+            <td class="project-actions">
+              <%= actions(t) %>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @tasks.each do |t| %>
-            <tr>
-              <td><%= link_to t.id, t %></td>
-              <td>
-                <strong><%= link_to t.name, t %></strong><br />
-                <small><%= t.description %></small>
-              </td>
-              <td class="project-actions">
-                <%= actions(t) %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-</div>
+<% end %>
