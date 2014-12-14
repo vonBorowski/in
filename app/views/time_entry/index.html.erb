@@ -11,37 +11,68 @@
     projects = Organization.find_by(id: organization).projects if !organization.blank?
     tasks = []
     tasks = Project.find_by(id: project).tasks if !project.blank?
+    if params[:range_start].blank?
+      start_date = Time.zone.now.beginning_of_month
+    else
+      start_date = Time.zone.local(*params[:range_start].sort.map(&:last).map(&:to_i))
+    end
+    if params[:range_end].blank?
+      end_date = Time.zone.now.end_of_month
+    else
+      end_date = Time.zone.local(*params[:range_end].sort.map(&:last).map(&:to_i))
+    end
 %>
-
 <%= ibox title: "Filtro", collapsed: true do %>
   <%= bootstrap_form_tag method: 'get', layout: :horizontal do |f| %>
-    <%= f.select :organization_id,
-          options_from_collection_for_select(Organization.all, :id, :name, params[:organization_id]),
-          { include_blank: true },
-          class: "form-control",
-          id: 'organization_id',
-          name: 'organization_id',
-          "data-dynamic-selectable-url" => organization_project_index_path(':organization_id'),
-          "data-dynamic-selectable-target" => '#project_id',
-          "data-dynamic-selectable-blank" => 'true' %>
-    <%= f.select :project_id,
-          options_from_collection_for_select(projects, :id, :name, project),
-          { include_blank: true },
-          class: "form-control col-sm-10",
-          id: 'project_id',
-          name: 'project_id',
-          "data-dynamic-selectable-url" => project_task_index_path(':project_id'),
-          "data-dynamic-selectable-target" => '#task_id',
-          "data-dynamic-selectable-blank" => 'true' %>
-    <%= f.select :task_id,
-          options_from_collection_for_select(tasks, :id, :name, task),
-          { include_blank: true },
-          class: "form-control col-sm-10",
-          id: 'task_id',
-          name: 'task_id' %>
-    <%= f.form_group do %>
-      <%= f.submit "Filtrar", class: "btn btn-primary"%>
-    <% end %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.form_group do %>
+          <%= f.label :range_start, class: 'control-label col-sm-2' %>
+          <div class="rails-bootstrap-forms-date-select col-sm-10">
+            <%= date_select :range_start, :date, { order: [:month, :day, :year], selected: start_date }, { class: 'form-control' } %>
+          </div>
+        <% end %>
+        <%= f.form_group do %>
+          <%= f.label :range_end, class: 'control-label col-sm-2'%>
+          <div class="rails-bootstrap-forms-date-select col-sm-10">
+            <%= date_select :range_end, :date, { order: [:month, :day, :year], selected: end_date }, { class: 'form-control' } %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <%= f.select :organization_id,
+              options_from_collection_for_select(Organization.all, :id, :name, params[:organization_id]),
+              { include_blank: true },
+              class: "form-control",
+              id: 'organization_id',
+              name: 'organization_id',
+              "data-dynamic-selectable-url" => organization_project_index_path(':organization_id'),
+              "data-dynamic-selectable-target" => '#project_id',
+              "data-dynamic-selectable-blank" => 'true' %>
+        <%= f.select :project_id,
+              options_from_collection_for_select(projects, :id, :name, project),
+              { include_blank: true },
+              class: "form-control col-sm-10",
+              id: 'project_id',
+              name: 'project_id',
+              "data-dynamic-selectable-url" => project_task_index_path(':project_id'),
+              "data-dynamic-selectable-target" => '#task_id',
+              "data-dynamic-selectable-blank" => 'true' %>
+        <%= f.select :task_id,
+              options_from_collection_for_select(tasks, :id, :name, task),
+              { include_blank: true },
+              class: "form-control col-sm-10",
+              id: 'task_id',
+              name: 'task_id' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <%= f.form_group do %>
+          <%= f.submit "Filtrar", class: "btn btn-primary"%>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 <% end %>
 
