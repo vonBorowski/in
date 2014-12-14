@@ -3,34 +3,31 @@
   <% link_to "Novo Usuário", new_user_path, class: "btn btn-primary"%>
 <% end %>
 
-<div class="ibox float-e-margins">
-  <%= render partial: "layouts/float_header", locals: { title: "Usuários" } %>
-  <div class="ibox-content">
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
+<%= ibox title: "Usuários" do %>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Empresa</th>
+          <th>E-mail</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |u| %>
           <tr>
-            <th>#</th>
-            <th>Nome</th>
-            <th>Empresa</th>
-            <th>E-mail</th>
-            <th></th>
+            <td><%= link_to u.id, u %></td>
+            <td><strong><%= link_to u.full_name, u %></strong></td>
+            <td><%= u.organization.nil? ? '' : u.organization.name %></td>
+            <td><%= mail_to u.email, u.email %></td>
+            <td class="project-actions">
+              <%= actions(u) %>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |u| %>
-            <tr>
-              <td><%= link_to u.id, u %></td>
-              <td><strong><%= link_to u.full_name, u %></strong></td>
-              <td><%= u.organization.nil? ? '' : u.organization.name %></td>
-              <td><%= mail_to u.email, u.email %></td>
-              <td class="project-actions">
-                <%= actions(u) %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-</div>
+<% end %>

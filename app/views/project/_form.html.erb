@@ -3,19 +3,16 @@
   <% end %>
   <div class="row">
     <div class="col-lg-12">
-      <div class="ibox float-e-margins">
-        <%= render partial: "layouts/float_header", locals: { title: "Dados do Projeto" } %>
-        <div class="ibox-content">
-          <div class="form-horizontal m-t-md">
-            <%= f.select :organization_id, options_for_select(Organization.all.map {|s| [s.name, s.id]}, @project.organization_id), {}, class: "form-control", disabled: "true" %>
-            <%= f.text_field :name, class: "form-control" %>
-            <%= f.text_field :description, class: "form-control" %>
-            <%= f.text_field :budget, class: "form-control" %>
-            <%= f.form_group do %>
-              <%= f.check_box :block %>
-            <% end %>
-          </div>
+      <%= ibox title: "Dados do Projeto" do %>
+        <div class="form-horizontal m-t-md">
+          <%= f.select :organization_id, options_for_select(Organization.all.map {|s| [s.name, s.id]}, @project.organization_id), {}, class: "form-control", disabled: "true" %>
+          <%= f.text_field :name, class: "form-control" %>
+          <%= f.text_field :description, class: "form-control" %>
+          <%= f.text_field :budget, class: "form-control" %>
+          <%= f.form_group do %>
+            <%= f.check_box :block %>
+          <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
