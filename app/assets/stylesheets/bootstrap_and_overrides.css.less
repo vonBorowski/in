@@ -30,3 +30,17 @@
 //
 // Example:
 // @link-color: #ff0000;
+
+@media print {
+  a[href]:after {
+    content: none;
+  }
+
+  .footer {
+    display: none;
+  }
+
+  .btn {
+    display: none;
+  }
+}
